@@ -55,6 +55,16 @@ bool pos_safe(int grid[N][N], int row, int col, int num){
 
 bool locate_empty(int grid[N][N], int *row, int *col){
     //find an empty position in the grid
+    bool findEmptyLocation(int grid[N][N], int *row, int *col) {
+    for (*row = 0; *row < N; (*row)++) {
+        for (*col = 0; *col < N; (*col)++) {
+            if (grid[*row][*col] == 0) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 }
 
 

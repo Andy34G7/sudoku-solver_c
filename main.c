@@ -6,8 +6,8 @@
 
 void print_grid(int grid[N][N]);
 bool pos_safe(int grid[N][N], int row, int col, int num);
-bool locate_empty(int grid[N][N], int *row, int *col);
-bool solve(int grid[N][N]);
+bool locate_filled(int grid[N][N], int *row, int *col);
+bool solve(int grid[N][N],int,int);
 
 
 int main(){
@@ -53,22 +53,27 @@ bool pos_safe(int grid[N][N], int row, int col, int num){
 }
 
 
-bool locate_empty(int grid[N][N], int *row, int *col){
-    //find an empty position in the grid
-    bool findEmptyLocation(int grid[N][N], int *row, int *col) {
+bool locate_filled(int grid[N][N], int *row, int *col){
+    //find a filled position in the grid
     for (*row = 0; *row < N; (*row)++) {
         for (*col = 0; *col < N; (*col)++) {
             if (grid[*row][*col] == 0) {
-                return true;
+                return false;
             }
         }
     }
-    return false;
-}
-}
+    return true;
+}//instead of locating empty, i located the filled, and when filled cell is found, idea is to just go to next cell
 
 
-bool solve(int grid[N][N]){
+bool solve(int grid[N][N],int row, int col){
     //solve logic
-}
+    if (row == 9)//solving row after row, rows--> 0 to 8, i.e. 9 means out of bounds
+    print_grid(grid);
 
+    if (col == 9) 
+    return recurr(grid, row + 1, 0);
+    
+    if (locate_filled(grid,&row,&col))
+    return recurr(grid, row, col + 1);//i.e. since it is filled, you skip this cell and go to the next one
+}

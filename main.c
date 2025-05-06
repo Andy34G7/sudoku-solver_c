@@ -26,7 +26,12 @@ int main(){
 
 
 void print_grid(int grid[N][N]){
-    //print logic
+    for(int i = 0; i < N; i ++){
+        for(int j = 0; j < N; j ++){
+            printf("%d   ", grid[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 

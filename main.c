@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <ncurses.h>
 
 #define N 9
 #define NA 0
@@ -77,8 +78,8 @@ bool solve(int grid[N][N],int row, int col){
     print_grid(grid);
 
     if (col == 9) 
-    return recurr(grid, row + 1, 0);
+    return solve(grid, row + 1, 0);
     
     if (locate_filled(grid,&row,&col))
-    return recurr(grid, row, col + 1);//i.e. since it is filled, you skip this cell and go to the next one
+    return solve(grid, row, col + 1);//i.e. since it is filled, you skip this cell and go to the next one
 }

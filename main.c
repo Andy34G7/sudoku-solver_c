@@ -5,23 +5,18 @@
 #define NA 0
 
 void print_grid(int grid[N][N]);
-bool pos_safe(int grid[N][N], int row, int col, int num);
-bool locate_filled(int grid[N][N], int *row, int *col);
+bool pos_safe(int grid[N][N], int row, int col, int num);   
 bool solve(int grid[N][N]);
 
 
 int main(){
-    int grid[N][N] = {
-        {5, 3, 0, 0, 7, 0, 0, 0, 0},
-        {6, 0, 0, 1, 9, 5, 0, 0, 0},
-        {0, 9, 8, 0, 0, 0, 0, 6, 0},
-        {8, 0, 0, 0, 6, 0, 0, 0, 3},
-        {4, 0, 0, 8, 0, 3, 0, 0, 1},
-        {7, 0, 0, 0, 2, 0, 0, 0, 6},
-        {0, 6, 0, 0, 0, 0, 2, 8, 0},
-        {0, 0, 0, 4, 1, 9, 0, 0, 5},
-        {0, 0, 0, 0, 8, 0, 0, 7, 9}
-    };
+    int grid[N][N];
+    for(int i = 0; i < N; i ++){
+        for(int j = 0; j < N; j ++){
+            printf("Enter the number in row %d and column %d (0 for blank): ", i, j);
+            scanf("%d", &grid[i][j]);
+        }
+    }
     printf("--- Sudoku Solver ---\n");
     
     printf("The Sudoku grid you entered is:\n");
@@ -48,7 +43,6 @@ void print_grid(int grid[N][N]){
 
 bool pos_safe(int grid[N][N], int row, int col, int num){
     //check if the number is safe to place in the given position
-    bool flag = true; // setting flag to true as the default case
     int r_start = row - (row % 3);
     int c_start = col - (col % 3);
     int rlim = row - (row % 3) + 3;
@@ -57,17 +51,17 @@ bool pos_safe(int grid[N][N], int row, int col, int num){
     for(int i = r_start; i < rlim; i ++){
         for(int j = c_start; j < clim; j ++){
             if (num == grid[i][j]){
-                flag = false;
+                return false;
             }
         }
     }
     // Checking rows and columns simultaneously
     for(int i = 0; i < N; i ++){
         if (num == grid[i][col] || num == grid[row][i]){
-            flag = false;
+            return false;
         }
     }
-    return flag;
+    return true;
 }
 
 

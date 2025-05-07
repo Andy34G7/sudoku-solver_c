@@ -1,15 +1,19 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <ncurses.h>
+#include <string.h>
+
 
 #define N 9
 #define NA 0
-
+void init_ncurses();
+void end_ncurses();
 void print_grid(int grid[N][N]);
 bool pos_safe(int grid[N][N], int row, int col, int num);
 bool locate_filled(int grid[N][N], int *row, int *col);
 bool solve(int grid[N][N],int,int);
-
+void get_input(int grid[N][N]);
+void display_message(const char *message);
 
 int main(){
     int grid[N][N];
@@ -25,14 +29,48 @@ int main(){
     //core logic here
 }
 
+void init_ncurses() {
+    initscr();
+    cbreak(); //Disable Line buffering
+    noecho();
+    keypad(stdscr, TRUE); // Enable function keys
+    curs_set(1);          // Show the cursor
+}
+
+void end_ncurses() {
+    endwin();
+}
 
 void print_grid(int grid[N][N]){
-    for(int i = 0; i < N; i ++){
-        for(int j = 0; j < N; j ++){
-            printf("%d   ", grid[i][j]);
-        }
-        printf("\n");
+    // grid display
+    int start_row = 6;
+    int start_col = 0;
+
+    // Clear area for grid printing
+    for (int i = 0; i < N * 2 + 2; i++) {
+        mvhline(start_row + i, start_col, ' ', N * 4); // Clear a line
     }
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            // Draw horizontal separators
+            if (i % 3 == 0 && i != 0) {
+                mvhline(start_row + i + (i / 3) -1, start_col, '-', N * 4);
+            }
+            // Draw vertical separators
+            if (j % 3 == 0 && j != 0) {
+                 mvvline(start_row, start_col + j * 4 - 2, '|', N * 2 + 2);
+                 mvvline(start_row, start_col + j * 4 - 1, ' ', N * 2 + 2); // Add space after separator
+            }
+
+            if (grid[i][j] == NA) {
+                mvprintw(start_row + i + (i/3), start_col + j * 4, " "); // Print space for empty cells
+            } else {
+                mvprintw(start_row + i + (i/3), start_col + j * 4, "%d", grid[i][j]); // Print number
+            }
+        }
+    }
+    refresh();
 }
 
 

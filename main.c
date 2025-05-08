@@ -2,10 +2,9 @@
 #include <stdbool.h>
 #include <ncurses.h>
 #include <string.h>
-#include <unistd.h> // For napms, if used for debugging
 
 #define N 9
-#define NA 0 // Not Assigned
+#define NA 0
 
 // Function prototypes
 void init_ncurses();
